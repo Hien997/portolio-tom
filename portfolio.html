@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hiển Nguyễn — Senior Front-End Developer</title>
+<meta name="description" content="Hiển Nguyễn — Senior Front-End Developer. React, TypeScript, hiệu năng và kiến trúc UI quy mô lớn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d10;
+    --bg-soft:#0e1013;
+    --surface:#141820;
+    --surface-2:#191e27;
+    --border:#242a34;
+    --border-soft:#1c212a;
+    --text:#e8eaee;
+    --text-dim:#9aa2b1;
+    --text-faint:#5c6472;
+    --accent:#e8a33d;
+    --accent-dim:#e8a33d1f;
+    --ok:#3ddc84;
+    --radius:10px;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent-dim);color:var(--accent)}
+  img,svg{display:block;max-width:100%}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  section{padding:120px 0}
+  @media (max-width:720px){section{padding:80px 0}}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--accent);
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:'//';color:var(--text-faint)}
+
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em}
+  h2{font-size:clamp(28px,4vw,40px);margin-bottom:48px;max-width:640px}
+  .section-lede{font-size:16px;color:var(--text-dim);margin-top:-32px;margin-bottom:48px;max-width:560px}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(11,13,16,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;padding:0 24px;
+    height:64px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-family:var(--font-mono);font-size:15px;font-weight:500}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:32px;font-size:14px;color:var(--text-dim)}
+  .nav-links a{transition:color .15s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{
+    font-family:var(--font-mono);font-size:13px;
+    border:1px solid var(--border);border-radius:6px;
+    padding:8px 16px;color:var(--text);transition:border-color .15s,color .15s;
+  }
+  .nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer}
+  @media (max-width:800px){
+    .nav-links{position:fixed;top:64px;left:0;right:0;background:var(--bg-soft);flex-direction:column;gap:0;
+      border-bottom:1px solid var(--border-soft);transform:translateY(-140%);transition:transform .25s ease;padding:8px 0}
+    .nav-links.open{transform:translateY(0)}
+    .nav-links a{padding:14px 24px;border-bottom:1px solid var(--border-soft)}
+    .nav-cta{display:none}
+    .nav-toggle{display:block}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:120px;padding-bottom:80px;
+    border-bottom:1px solid var(--border-soft);
+    position:relative;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:64px;align-items:center}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:48px}}
+  .hero-status{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:12px;color:var(--text-dim);
+    border:1px solid var(--border);border-radius:20px;padding:6px 14px;margin-bottom:28px;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px #3ddc8422}
+  .hero h1{font-size:clamp(38px,6vw,64px);line-height:1.04;margin-bottom:18px}
+  .hero h1 .last{color:var(--accent)}
+  .hero-role{font-size:clamp(17px,2vw,20px);color:var(--text-dim);margin-bottom:14px;font-weight:500}
+  .hero-stack-line{font-family:var(--font-mono);font-size:14px;color:var(--text-faint);margin-bottom:36px}
+  .hero-stack-line b{color:var(--text-dim);font-weight:500}
+  .hero-links{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{
+    font-family:var(--font-mono);font-size:13px;
+    padding:12px 22px;border-radius:6px;border:1px solid var(--border);
+    transition:all .15s ease;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn:hover{border-color:var(--text-dim);transform:translateY(-1px)}
+  .btn-primary{background:var(--accent);color:#241a05;border-color:var(--accent);font-weight:600}
+  .btn-primary:hover{background:#f0b455;border-color:#f0b455}
+
+  .terminal{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    overflow:hidden;
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:6px;padding:12px 16px;
+    border-bottom:1px solid var(--border);background:var(--surface-2);
+  }
+  .terminal-bar span{width:10px;height:10px;border-radius:50%;background:var(--border)}
+  .terminal-bar .fname{margin-left:10px;font-family:var(--font-mono);font-size:12px;color:var(--text-faint)}
+  .terminal-body{padding:22px;font-family:var(--font-mono);font-size:13.5px;min-height:220px}
+  .terminal-body .line{margin-bottom:12px;color:var(--text-dim)}
+  .terminal-body .prompt{color:var(--accent)}
+  .terminal-body .out{color:var(--text)}
+  .caret{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;gap:32px}}
+  .about-copy p{color:var(--text-dim);margin-bottom:18px;font-size:16px}
+  .about-copy strong{color:var(--text);font-weight:600}
+  .stat-list{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .stat{background:var(--surface);padding:26px 22px}
+  .stat-num{font-family:var(--font-display);font-size:32px;font-weight:600;color:var(--accent)}
+  .stat-label{font-size:13px;color:var(--text-faint);margin-top:6px}
+
+  /* ---------- STACK ---------- */
+  .stack-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px}
+  @media (max-width:900px){.stack-wrap{grid-template-columns:1fr}}
+  .code-block{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    font-family:var(--font-mono);font-size:13.5px;overflow:hidden;
+  }
+  .code-block .terminal-bar .fname{color:var(--text-faint)}
+  .code-block pre{padding:22px;overflow-x:auto;color:var(--text-dim)}
+  .code-key{color:#7fb0ea}
+  .code-str{color:#e8a33d}
+  .code-punct{color:var(--text-faint)}
+  .stack-groups{display:flex;flex-direction:column;gap:22px}
+  .stack-group-title{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--text-dim);
+    border:1px solid var(--border);border-radius:6px;padding:6px 12px;
+    transition:border-color .15s,color .15s;
+  }
+  .chip:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{position:relative;padding-left:32px}
+  .timeline::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--border)}
+  .tl-item{position:relative;padding-bottom:52px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{position:relative;left:-32px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);position:absolute}
+  .tl-date{font-family:var(--font-mono);font-size:12.5px;color:var(--text-faint);margin-bottom:6px}
+  .tl-role{font-size:19px;font-weight:600;font-family:var(--font-display)}
+  .tl-company{color:var(--accent);font-size:15px;margin-bottom:12px}
+  .tl-desc{color:var(--text-dim);margin-bottom:14px;max-width:640px}
+  .tl-metrics{display:flex;flex-wrap:wrap;gap:10px}
+  .tl-metric{
+    font-family:var(--font-mono);font-size:12px;color:var(--text-dim);
+    background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 10px;
+  }
+  .tl-metric b{color:var(--ok)}
+
+  /* ---------- PROJECTS ---------- */
+  .proj-card{
+    border:1px solid var(--border);border-radius:12px;background:var(--surface);
+    margin-bottom:20px;overflow:hidden;
+  }
+  .proj-head{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:26px 28px;cursor:pointer;user-select:none;
+  }
+  .proj-title-wrap{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .proj-index{font-family:var(--font-mono);color:var(--text-faint);font-size:13px}
+  .proj-title{font-family:var(--font-display);font-size:20px;font-weight:600}
+  .proj-tag{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);border:1px solid var(--accent-dim);background:var(--accent-dim);border-radius:5px;padding:3px 9px}
+  .proj-chevron{font-family:var(--font-mono);color:var(--text-faint);transition:transform .25s ease;flex-shrink:0}
+  .proj-card.open .proj-chevron{transform:rotate(45deg)}
+  .proj-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .proj-card.open .proj-body{max-height:900px}
+  .proj-body-inner{padding:0 28px 30px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:760px){.proj-body-inner{grid-template-columns:1fr}}
+  .proj-block-label{font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .proj-block p{color:var(--text-dim);font-size:14.5px;margin-bottom:16px}
+  .proj-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .proj-links{display:flex;gap:10px}
+  .proj-links a{font-family:var(--font-mono);font-size:12.5px;color:var(--text-dim);border:1px solid var(--border);border-radius:6px;padding:7px 12px;transition:border-color .15s,color .15s}
+  .proj-links a:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ---------- ENGINEERING ---------- */
+  .eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  @media (max-width:860px){.eng-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.eng-grid{grid-template-columns:1fr}}
+  .eng-card{background:var(--surface);padding:28px 24px;transition:background .2s}
+  .eng-card:hover{background:var(--surface-2)}
+  .eng-metric{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--accent);margin-bottom:6px}
+  .eng-label{font-size:14.5px;font-weight:600;margin-bottom:8px}
+  .eng-desc{font-size:13.5px;color:var(--text-dim);line-height:1.55}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .edu-item{background:var(--surface);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .edu-name{font-weight:600;font-size:15px}
+  .edu-org{color:var(--text-dim);font-size:14px;margin-top:2px}
+  .edu-date{font-family:var(--font-mono);font-size:12.5px;color:var(--text-faint);white-space:nowrap}
+
+  /* ---------- CONTACT ---------- */
+  .contact{border-top:1px solid var(--border-soft)}
+  .contact-inner{text-align:center;max-width:600px;margin:0 auto}
+  .contact h2{margin:0 auto 20px;max-width:none}
+  .contact p{color:var(--text-dim);margin-bottom:36px}
+  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:64px}
+  .footer-bar{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    font-family:var(--font-mono);font-size:12px;color:var(--text-faint);
+    border-top:1px solid var(--border-soft);padding-top:24px;
+  }
+
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">HN<span>_</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#stack">Stack</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#engineering">Engineering</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Liên hệ</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Mở menu">☰</button>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-status"><span class="dot"></span> Đang mở cho cơ hội mới · Hà Nội, VN</div>
+        <h1>Hiển Nguyễn<br><span class="last">Senior Front-End Developer</span></h1>
+        <p class="hero-role">Xây dựng UI quy mô lớn, mượt và có kiến trúc rõ ràng.</p>
+        <p class="hero-stack-line"><b>React</b> / <b>TypeScript</b> / <b>Performance</b> / <b>Scalable UI</b></p>
+        <div class="hero-links">
+          <a href="#" class="btn btn-primary">Xem CV ↗</a>
+          <a href="https://github.com/" class="btn">GitHub</a>
+          <a href="https://linkedin.com/" class="btn">LinkedIn</a>
+          <a href="#contact" class="btn">Liên hệ</a>
+        </div>
+      </div>
+      <div class="terminal reveal">
+        <div class="terminal-bar"><span></span><span></span><span></span><div class="fname">whoami.sh</div></div>
+        <div class="terminal-body" id="termBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">giới thiệu</div>
+    <h2 class="reveal">Kỹ sư front-end thiên về sản phẩm, không chỉ giao diện.</h2>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p><strong>~6 năm</strong> làm Front-End, tập trung vào việc biến các yêu cầu nghiệp vụ phức tạp thành giao diện nhanh, dễ dùng và dễ mở rộng.</p>
+        <p>Thành thạo hệ sinh thái <strong>React / TypeScript</strong>, từ dashboard nội bộ hàng triệu bản ghi đến các website hướng người dùng cuối cần tối ưu tốc độ tải và SEO.</p>
+        <p>Có kinh nghiệm xây dựng và duy trì các <strong>ứng dụng quy mô lớn</strong>: chuẩn hoá kiến trúc, thiết kế hệ thống component dùng chung, và làm việc chặt chẽ với backend để tối ưu luồng dữ liệu.</p>
+      </div>
+      <div class="stat-list reveal">
+        <div class="stat"><div class="stat-num">6+</div><div class="stat-label">năm kinh nghiệm Front-End</div></div>
+        <div class="stat"><div class="stat-num">1M+</div><div class="stat-label">bản ghi từng render mượt</div></div>
+        <div class="stat"><div class="stat-num">10+</div><div class="stat-label">dự án production</div></div>
+        <div class="stat"><div class="stat-num">60fps</div><div class="stat-label">mục tiêu hiệu năng UI</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="eyebrow">tech stack</div>
+    <h2 class="reveal">Bộ công cụ được chọn có chủ đích, không chạy theo trend.</h2>
+    <div class="stack-wrap">
+      <div class="code-block reveal">
+        <div class="terminal-bar"><span></span><span></span><span></span><div class="fname">package.json</div></div>
+        <pre><span class="code-punct">{</span>
+  <span class="code-key">"core"</span><span class="code-punct">:</span> <span class="code-punct">[</span><span class="code-str">"react"</span>, <span class="code-str">"typescript"</span>, <span class="code-str">"next.js"</span>, <span class="code-str">"vite"</span><span class="code-punct">]</span>,
+  <span class="code-key">"data"</span><span class="code-punct">:</span> <span class="code-punct">[</span><span class="code-str">"@tanstack/query"</span>, <span class="code-str">"@tanstack/table"</span>, <span class="code-str">"@tanstack/virtual"</span><span class="code-punct">]</span>,
+  <span class="code-key">"state"</span><span class="code-punct">:</span> <span class="code-punct">[</span><span class="code-str">"zustand"</span>, <span class="code-str">"react-hook-form"</span>, <span class="code-str">"zod"</span><span class="code-punct">]</span>,
+  <span class="code-key">"ui"</span><span class="code-punct">:</span> <span class="code-punct">[</span><span class="code-str">"tailwindcss"</span>, <span class="code-str">"shadcn/ui"</span><span class="code-punct">]</span>,
+  <span class="code-key">"quality"</span><span class="code-punct">:</span> <span class="code-punct">[</span><span class="code-str">"vitest"</span>, <span class="code-str">"playwright"</span>, <span class="code-str">"eslint"</span><span class="code-punct">]</span>
+<span class="code-punct">}</span></pre>
+      </div>
+      <div class="stack-groups reveal">
+        <div>
+          <div class="stack-group-title">Core</div>
+          <div class="chip-row">
+            <span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Next.js</span><span class="chip">Vite</span>
+          </div>
+        </div>
+        <div>
+          <div class="stack-group-title">Data &amp; forms</div>
+          <div class="chip-row">
+            <span class="chip">TanStack Query</span><span class="chip">TanStack Table</span><span class="chip">TanStack Virtual</span>
+            <span class="chip">Zustand</span><span class="chip">React Hook Form</span><span class="chip">Zod</span>
+          </div>
+        </div>
+        <div>
+          <div class="stack-group-title">Giao diện</div>
+          <div class="chip-row">
+            <span class="chip">Tailwind CSS</span><span class="chip">shadcn/ui</span>
+          </div>
+        </div>
+        <div>
+          <div class="stack-group-title">Testing / Performance / Architecture</div>
+          <div class="chip-row">
+            <span class="chip">Vitest</span><span class="chip">Playwright</span><span class="chip">Web Vitals</span>
+            <span class="chip">Module Federation</span><span class="chip">Monorepo (Turborepo)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">kinh nghiệm</div>
+    <h2 class="reveal">Dòng thời gian công việc.</h2>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2023 — Hiện tại</div>
+        <div class="tl-role">Senior Front-End Developer</div>
+        <div class="tl-company">[Tên công ty]</div>
+        <p class="tl-desc">Dẫn dắt kiến trúc front-end cho hệ thống quản lý nội bộ, thiết kế lại tầng data-fetching và chuẩn hoá bộ component dùng chung cho nhiều team.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">Giảm <b>40%</b> thời gian tải trang</div>
+          <div class="tl-metric">Render mượt <b>1M+</b> dòng dữ liệu</div>
+          <div class="tl-metric">Dẫn dắt <b>4</b> kỹ sư front-end</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2021 — 2023</div>
+        <div class="tl-role">Front-End Developer</div>
+        <div class="tl-company">[Tên công ty]</div>
+        <p class="tl-desc">Phát triển và bảo trì các module dashboard, xây dựng thư viện component nội bộ trên nền React + TypeScript, tích hợp CI/CD cho front-end.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">Bundle size giảm <b>35%</b></div>
+          <div class="tl-metric">Coverage test <b>80%+</b></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2019 — 2021</div>
+        <div class="tl-role">Front-End Developer</div>
+        <div class="tl-company">[Tên công ty]</div>
+        <p class="tl-desc">Xây dựng các sản phẩm web từ đầu cho khách hàng vừa và nhỏ, làm việc trực tiếp với thiết kế và backend để hoàn thiện sản phẩm end-to-end.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric"><b>10+</b> dự án đã bàn giao</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">dự án nổi bật</div>
+    <h2 class="reveal">Vấn đề thật, giải pháp thật.</h2>
+
+    <div class="proj-card reveal" data-proj="1">
+      <div class="proj-head" onclick="toggleProj(this)">
+        <div class="proj-title-wrap">
+          <span class="proj-index">01</span>
+          <span class="proj-title">Store Management System</span>
+          <span class="proj-tag">Large-scale UI</span>
+        </div>
+        <span class="proj-chevron">+</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="proj-block">
+            <div class="proj-block-label">Problem</div>
+            <p>Đội vận hành cần thao tác trên bảng dữ liệu tồn kho hàng trăm nghìn dòng mỗi ngày, nhưng bảng gốc bị treo và giật khi lọc, sắp xếp hoặc cuộn nhanh.</p>
+            <div class="proj-block-label">Solution</div>
+            <p>Viết lại tầng bảng dữ liệu bằng virtualization, chuyển tính toán nặng (lọc, tổng hợp) sang Web Worker, và thiết kế lại luồng fetch theo phân trang kiểu cursor để giảm tải backend.</p>
+          </div>
+          <div class="proj-block">
+            <div class="proj-block-label">Tech stack</div>
+            <div class="proj-stack">
+              <span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">TanStack Table</span>
+              <span class="chip">TanStack Virtual</span><span class="chip">Zustand</span><span class="chip">Web Worker</span>
+            </div>
+            <div class="proj-block-label">Architecture</div>
+            <p>Kiến trúc tách biệt tầng dữ liệu (query cache) khỏi tầng hiển thị (virtualized rows), cho phép mở rộng thêm cột và bộ lọc mà không ảnh hưởng hiệu năng render.</p>
+            <div class="proj-links">
+              <a href="#">Demo ↗</a>
+              <a href="https://github.com/">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card reveal" data-proj="2">
+      <div class="proj-head" onclick="toggleProj(this)">
+        <div class="proj-title-wrap">
+          <span class="proj-index">02</span>
+          <span class="proj-title">Wedding Website</span>
+          <span class="proj-tag">Performance / SEO</span>
+        </div>
+        <span class="proj-chevron">+</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="proj-block">
+            <div class="proj-block-label">Problem</div>
+            <p>Cần một trang web thiệp cưới tải nhanh trên mạng di động, đẹp trên mọi kích thước màn hình, và dễ để cô dâu chú rể tự cập nhật nội dung.</p>
+            <div class="proj-block-label">Solution</div>
+            <p>Xây dựng bằng Next.js với static generation, tối ưu ảnh tự động, và một hệ thống nội dung đơn giản dạng file để chỉnh sửa không cần biết code.</p>
+          </div>
+          <div class="proj-block">
+            <div class="proj-block-label">Tech stack</div>
+            <div class="proj-stack">
+              <span class="chip">Next.js</span><span class="chip">Tailwind CSS</span><span class="chip">Framer Motion</span>
+            </div>
+            <div class="proj-block-label">Architecture</div>
+            <p>Static site với ISR cho phần RSVP, tối ưu Core Web Vitals để đạt điểm Lighthouse cao trên cả di động.</p>
+            <div class="proj-links">
+              <a href="#">Demo ↗</a>
+              <a href="https://github.com/">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card reveal" data-proj="3">
+      <div class="proj-head" onclick="toggleProj(this)">
+        <div class="proj-title-wrap">
+          <span class="proj-index">03</span>
+          <span class="proj-title">Đền Thờ Dương 1C</span>
+          <span class="proj-tag">Content-driven site</span>
+        </div>
+        <span class="proj-chevron">+</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="proj-block">
+            <div class="proj-block-label">Problem</div>
+            <p>Website giới thiệu di tích cần thể hiện được chiều sâu nội dung, hình ảnh và lịch sử, nhưng vẫn phải tải nhanh và thân thiện với công cụ tìm kiếm.</p>
+            <div class="proj-block-label">Solution</div>
+            <p>Thiết kế hệ thống trang nội dung tĩnh, tối ưu SEO on-page (structured data, sitemap, meta), và tối ưu hình ảnh theo định dạng hiện đại để giảm dung lượng tải.</p>
+          </div>
+          <div class="proj-block">
+            <div class="proj-block-label">Tech stack</div>
+            <div class="proj-stack">
+              <span class="chip">Next.js</span><span class="chip">Tailwind CSS</span><span class="chip">Structured Data</span>
+            </div>
+            <div class="proj-block-label">Architecture</div>
+            <p>Static generation toàn bộ trang nội dung, CDN cho ảnh, và cấu trúc route rõ ràng phục vụ index hoá tốt trên công cụ tìm kiếm.</p>
+            <div class="proj-links">
+              <a href="#">Demo ↗</a>
+              <a href="https://github.com/">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="engineering">
+  <div class="wrap">
+    <div class="eyebrow">engineering</div>
+    <h2 class="reveal">Nơi kinh nghiệm senior thể hiện rõ nhất.</h2>
+    <p class="section-lede reveal">Không chỉ viết UI đẹp — mà còn chịu tải, chịu quy mô, và dễ bảo trì theo thời gian.</p>
+    <div class="eng-grid reveal">
+      <div class="eng-card">
+        <div class="eng-metric">1M+</div>
+        <div class="eng-label">Large-scale UI</div>
+        <div class="eng-desc">Render bảng dữ liệu hàng triệu dòng mà vẫn giữ thao tác cuộn và lọc mượt.</div>
+      </div>
+      <div class="eng-card">
+        <div class="eng-metric">&lt;16ms</div>
+        <div class="eng-label">Virtualization</div>
+        <div class="eng-desc">Chỉ render các phần tử trong viewport, dùng TanStack Virtual cho danh sách và bảng cực lớn.</div>
+      </div>
+      <div class="eng-card">
+        <div class="eng-metric">0 jank</div>
+        <div class="eng-label">Web Worker</div>
+        <div class="eng-desc">Đưa các phép tính nặng (lọc, sắp xếp, tổng hợp) ra khỏi main thread để UI không bị đứng.</div>
+      </div>
+      <div class="eng-card">
+        <div class="eng-metric">N-tier</div>
+        <div class="eng-label">Frontend Architecture</div>
+        <div class="eng-desc">Tách rõ tầng dữ liệu, trạng thái và hiển thị; thiết kế hệ thống component dùng chung cho nhiều team.</div>
+      </div>
+      <div class="eng-card">
+        <div class="eng-metric">Cache-first</div>
+        <div class="eng-label">API / Data fetching</div>
+        <div class="eng-desc">Chuẩn hoá tầng fetch với TanStack Query: cache, retry, phân trang cursor, và đồng bộ trạng thái server-client.</div>
+      </div>
+      <div class="eng-card">
+        <div class="eng-metric">Core Web Vitals</div>
+        <div class="eng-label">Performance optimization</div>
+        <div class="eng-desc">Tối ưu LCP/CLS/INP, code-splitting, lazy loading, và giám sát hiệu năng thực tế trên production.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow">học vấn &amp; chứng chỉ</div>
+    <h2 class="reveal">Education / Certificates</h2>
+    <div class="edu-list reveal">
+      <div class="edu-item">
+        <div>
+          <div class="edu-name">Cử nhân Công nghệ thông tin</div>
+          <div class="edu-org">[Tên trường]</div>
+        </div>
+        <div class="edu-date">[Năm tốt nghiệp]</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-name">[Tên chứng chỉ, ví dụ: Frontend Architecture]</div>
+          <div class="edu-org">[Đơn vị cấp]</div>
+        </div>
+        <div class="edu-date">[Năm]</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-name">[Tên chứng chỉ khác]</div>
+          <div class="edu-org">[Đơn vị cấp]</div>
+        </div>
+        <div class="edu-date">[Năm]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div class="eyebrow" style="justify-content:center">liên hệ</div>
+    <h2 class="reveal">Đang tìm một Senior Front-End Developer?</h2>
+    <p class="reveal">Sẵn sàng trao đổi về vị trí full-time, hoặc dự án cần một người xử lý phần hiệu năng và kiến trúc UI khó.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:hello@example.com" class="btn btn-primary">Email ↗</a>
+      <a href="https://github.com/" class="btn">GitHub</a>
+      <a href="https://linkedin.com/" class="btn">LinkedIn</a>
+      <a href="#" class="btn">CV online</a>
+    </div>
+    <div class="footer-bar">
+      <span>© 2026 Hiển Nguyễn</span>
+      <span>built with React / Next.js</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // project accordion
+  function toggleProj(headEl) {
+    const card = headEl.closest('.proj-card');
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('.proj-card.open').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
+  }
+  document.querySelector('.proj-card').classList.add('open');
+
+  // hero terminal typing effect
+  const termLines = [
+    { p: '$ whoami', o: 'Hiển Nguyễn — Senior Front-End Developer' },
+    { p: '$ status --uptime', o: '6 năm kinh nghiệm · React / TypeScript' },
+    { p: '$ status --scale', o: '1,000,000+ dòng dữ liệu · 60fps · TanStack Virtual' },
+    { p: '$ status --focus', o: 'Performance · Architecture · Scalable UI' }
+  ];
+  const termBody = document.getElementById('termBody');
+  let li = 0;
+  function typeLine() {
+    if (li >= termLines.length) return;
+    const { p, o } = termLines[li];
+    const wrap = document.createElement('div');
+    wrap.className = 'line';
+    const promptSpan = document.createElement('span');
+    promptSpan.className = 'prompt';
+    wrap.appendChild(promptSpan);
+    termBody.appendChild(wrap);
+    let i = 0;
+    const typePrompt = setInterval(() => {
+      promptSpan.textContent = p.slice(0, i + 1);
+      i++;
+      if (i >= p.length) {
+        clearInterval(typePrompt);
+        setTimeout(() => {
+          const outDiv = document.createElement('div');
+          outDiv.className = 'line out';
+          outDiv.style.marginLeft = '4px';
+          outDiv.textContent = o;
+          termBody.appendChild(outDiv);
+          li++;
+          setTimeout(typeLine, 260);
+        }, 220);
+      }
+    }, 22);
+  }
+  const heroIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { typeLine(); heroIO.disconnect(); } });
+  }, { threshold: 0.3 });
+  heroIO.observe(document.querySelector('.terminal'));
+</script>
+
+</body>
+</html>
