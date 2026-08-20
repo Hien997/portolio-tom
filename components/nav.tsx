@@ -1,54 +1,54 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { ThemeToggle } from './theme-toggle'
-import { Menu, X } from 'lucide-react'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ThemeToggle } from "./theme-toggle";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { name: 'Trang chủ', href: '/' },
-  { name: 'Về tôi', href: '#about' },
-  { name: 'Kỹ năng', href: '#skills' },
-  { name: 'Kinh nghiệm', href: '#experience' },
-  { name: 'Dự án', href: '#projects' },
-  { name: 'Kỹ thuật', href: '#engineering' },
-  { name: 'CV', href: '/cv' },
-]
+  { name: "Trang chủ", href: "/" },
+  { name: "Về tôi", href: "#about" },
+  { name: "Kỹ năng", href: "#skills" },
+  { name: "Kinh nghiệm", href: "#experience" },
+  { name: "Dự án", href: "#projects" },
+  { name: "Kỹ thuật", href: "#engineering" },
+  { name: "CV", href: "#cv" },
+];
 
 export function Nav() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
-    setIsMobileMenuOpen(false)
-  }, [pathname])
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = "unset";
     }
-  }, [isMobileMenuOpen])
+  }, [isMobileMenuOpen]);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-background/80 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-transparent'
+          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-transparent"
       }`}
     >
       <div className="section-padding max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
@@ -106,5 +106,5 @@ export function Nav() {
         </div>
       )}
     </nav>
-  )
+  );
 }

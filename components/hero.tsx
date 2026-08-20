@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react'
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
 
 export function Hero() {
   return (
@@ -11,7 +11,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-6"
         >
           <motion.p
@@ -28,9 +28,8 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight"
           >
-            Nguyen Van Hien{' '}
-            <span className="text-gradient">Senior</span>{' '}
-            <span className="text-gradient">Front-End</span>{' '}
+            Nguyen Van Hien <span className="text-gradient">Senior</span>{" "}
+            <span className="text-gradient">Front-End</span>{" "}
             <span className="text-gradient">Developer</span>
           </motion.h1>
           <motion.p
@@ -55,7 +54,7 @@ export function Hero() {
               <ArrowDown size={18} />
             </Link>
             <Link
-              href="/cv"
+              href="#cv"
               className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-colors"
             >
               View CV
@@ -93,7 +92,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
+          transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
           className="relative hidden md:block"
         >
           <div className="relative w-full aspect-square max-w-lg mx-auto">
@@ -111,24 +110,34 @@ export function Hero() {
               </div>
               <div className="p-4 font-mono text-sm space-y-2">
                 <div>
-                  <span className="text-purple-500">const</span> <span className="text-blue-500">portfolio</span> = {'{'}
+                  <span className="text-purple-500">const</span>{" "}
+                  <span className="text-blue-500">portfolio</span> = {"{"}
                 </div>
                 <div className="pl-4">
-                  <span className="text-green-500">'name'</span>: <span className="text-amber-500">'Nguyen Van Hien'</span>,
+                  <span className="text-green-500">'name'</span>:{" "}
+                  <span className="text-amber-500">'Nguyen Van Hien'</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-green-500">'role'</span>: <span className="text-amber-500">'Senior FE Developer'</span>,
+                  <span className="text-green-500">'role'</span>:{" "}
+                  <span className="text-amber-500">'Senior FE Developer'</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-green-500">'stack'</span>: [<span className="text-amber-500">React</span>, <span className="text-amber-500">TypeScript</span>, <span className="text-amber-500">Next.js</span>],
+                  <span className="text-green-500">'stack'</span>: [
+                  <span className="text-amber-500">React</span>,{" "}
+                  <span className="text-amber-500">TypeScript</span>,{" "}
+                  <span className="text-amber-500">Next.js</span>],
                 </div>
                 <div className="pl-4">
-                  <span className="text-green-500">'experience'</span>: <span className="text-blue-500">6</span> <span className="text-muted-foreground">years</span>,
+                  <span className="text-green-500">'experience'</span>:{" "}
+                  <span className="text-blue-500">6</span>{" "}
+                  <span className="text-muted-foreground">years</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-green-500">'focus'</span>: [<span className="text-amber-500">Performance</span>, <span className="text-amber-500">Scalable UI</span>]
+                  <span className="text-green-500">'focus'</span>: [
+                  <span className="text-amber-500">Performance</span>,{" "}
+                  <span className="text-amber-500">Scalable UI</span>]
                 </div>
-                <div>{'}'}</div>
+                <div>{"}"}</div>
               </div>
             </div>
             <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-lg p-3 shadow-xl">
@@ -151,5 +160,5 @@ export function Hero() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
