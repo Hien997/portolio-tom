@@ -1,89 +1,123 @@
 # Hiển Nguyễn — Senior Front-End Developer Portfolio
 
-A single-page portfolio built around an "engineering console" concept: dark surface, technical typography, and a signature terminal in the Hero section to establish an engineering-first identity.
+A Next.js 14 + TypeScript + Tailwind CSS portfolio built around an "engineering console" concept: dark surface, technical typography, and a signature terminal in the Hero section to establish an engineering-first identity.
 
-**File:** `portfolio.html` — plain HTML/CSS/JS, no build step, no framework or package dependencies. Open it directly in a browser and it runs.
+## Tech Stack
 
----
+| Layer         | Technology                                       |
+| ------------- | ------------------------------------------------ |
+| Framework     | Next.js 14 (App Router), React 18                |
+| Language      | TypeScript                                       |
+| Styling       | Tailwind CSS + shadcn/ui                         |
+| Animations    | Framer Motion                                    |
+| Icons         | lucide-react                                     |
+| Fonts         | Inter, JetBrains Mono (next/font/google)         |
+| State/Store   | Zustand, React Hook Form, Zod                    |
+| Data/TanStack | TanStack Query, TanStack Table, TanStack Virtual |
+| Quality       | Vitest, Playwright, ESLint                       |
+| Architecture  | Module Federation, Monorepo (Turborepo)          |
 
-## Running it
+## Features
 
-No installation needed:
+- **Dark/Light theme** with system preference detection and localStorage persistence
+- **Language toggle** — switch between Vietnamese (VN) and English (EN)
+- **Responsive navigation** with mobile menu and scroll-aware background
+- **Scroll-reveal animations** using Framer Motion with `IntersectionObserver`
+- **Animated terminal** in Hero section with typing effect
+- **Interactive project cards** with accordion expand/collapse
+- **Section numbering** (01–06) with consistent visual language
+- **Accessibility** — respects `prefers-reduced-motion`, ARIA labels, keyboard navigation
 
-```bash
-open portfolio.html        # macOS
-# or
-start portfolio.html       # Windows
+## Project Structure
+
+```
+portfolio-dev/
+├── app/
+│   ├── layout.tsx          # Root layout with metadata, fonts, ThemeProvider
+│   └── page.tsx            # Home page composing all sections
+├── components/
+│   ├── nav.tsx             # Fixed navigation bar (scroll-aware, mobile menu)
+│   ├── hero.tsx            # Hero section with animated terminal
+│   ├── about.tsx           # About section with stats grid
+│   ├── stack.tsx           # Tech stack (package.json code block + chips)
+│   ├── experience.tsx      # Timeline of roles with impact metrics
+│   ├── projects.tsx        # Project accordion cards
+│   ├── engineering.tsx     # Engineering deep-dive cards
+│   ├── education.tsx       # Education & certificates
+│   ├── contact.tsx         # Contact section + footer
+│   ├── theme-provider.tsx  # Theme context provider
+│   ├── theme-toggle.tsx    # Dark/light mode toggle button
+│   └── icons.tsx           # Custom SVG icons (Github, LinkedIn, Mail, etc.)
+├── lib/
+│   └── utils.ts            # Utility functions (cn, twMerge)
+└── public/                 # Static assets (favicon, OG image)
 ```
 
-Or drag the file into a browser, or use VS Code's Live Server extension.
+## Running Locally
 
----
+```bash
+# Install dependencies
+npm install
 
-## Page structure
+# Start development server
+npm run dev
+# Opens http://localhost:3000 automatically
 
-| #   | Section (`id`) | Content                                                                                                              |
-| --- | -------------- | -------------------------------------------------------------------------------------------------------------------- |
-| 1   | `#hero`        | Name, title, core stack, CTAs (View CV / GitHub / LinkedIn / Contact), animated terminal signature                   |
-| 2   | `#about`       | Short bio + 4 highlight stats                                                                                        |
-| 3   | `#stack`       | Tech stack shown as a `package.json` block + grouped chip list                                                       |
-| 4   | `#experience`  | Timeline of companies/roles, with impact metrics                                                                     |
-| 5   | `#projects`    | 3 project cards (accordion): Problem / Solution / Tech stack / Architecture / Demo · GitHub                          |
-| 6   | `#engineering` | 6 deep-dive cards: Large-scale UI, Virtualization, Web Worker, Frontend Architecture, API/Data fetching, Performance |
-| 7   | `#education`   | Degrees & certificates                                                                                               |
-| 8   | `#contact`     | Email / GitHub / LinkedIn / Online CV                                                                                |
+# Build for production
+npm run build
 
----
+# Start production server
+npm run start
+```
 
-## Design tokens (declared in `:root`)
+## Page Sections
+
+| #   | Component     | Content                                                                                                 |
+| --- | ------------- | ------------------------------------------------------------------------------------------------------- |
+| 1   | `Hero`        | Name, title, core stack, CTAs, animated terminal signature                                              |
+| 2   | `About`       | Short bio + 4 highlight stats (6+ years, 1M+ records, etc.)                                             |
+| 3   | `Stack`       | Tech stack shown as a `package.json` block + grouped chip list                                          |
+| 4   | `Experience`  | Timeline of companies/roles, with impact metrics                                                        |
+| 5   | `Projects`    | 3 project cards (accordion): Problem / Solution / Tech / Architecture / Demo · GitHub                   |
+| 6   | `Engineering` | 6 deep-dive cards: Large-scale UI, Virtualization, Web Worker, Architecture, Data fetching, Performance |
+| 7   | `Education`   | Degrees & certificates                                                                                  |
+| 8   | `Contact`     | Email / GitHub / LinkedIn / Online CV + footer                                                          |
+
+## Design Tokens
+
+Colors and fonts are defined in `app/globals.css` using CSS variables (HSL format for Tailwind):
 
 ```css
---bg: #0b0d10 /* page background */ --surface: #141820
-  /* card / terminal background */ --border: #242a34 /* hairline border */
-  --text: #e8eaee /* primary text */ --text-dim: #9aa2b1 /* secondary text */
-  --accent: #e8a33d /* signal color — the single deliberate accent */
-  --ok: #3ddc84 /* status dot for "open to new opportunities" */
-  --font-display: "Space Grotesk" /* headings */ --font-body: "Inter"
-  /* body copy */ --font-mono: "JetBrains Mono"
-  /* labels, code, stats, terminal */;
+:root {
+  --background: 222 47% 11%; /* page background */
+  --foreground: 210 40% 98%; /* primary text */
+  --primary: 199 89% 48%; /* accent color */
+  --border: 217 33% 17%; /* hairline border */
+  --card: 222 47% 13%; /* card / terminal background */
+}
 ```
 
-Change colors or fonts here and the whole page picks it up.
+## To Do Before Publishing
 
----
+- [ ] **Hero**: real CV, GitHub, and LinkedIn links
+- [ ] **Experience**: company names, dates, descriptions, impact metrics
+- [ ] **Projects**: real Demo/GitHub links for all 3 projects
+- [ ] **Education**: school name, certificates, years
+- [ ] **Contact**: real email address
+- [ ] **Meta**: SEO title/description in `app/layout.tsx`
+- [ ] **Translations**: complete English translations for all sections
 
-## To do before publishing (current content is placeholder)
+## Roadmap
 
-- [ ] **Hero**: real CV, GitHub, and LinkedIn links (`href="#"` → real URLs)
-- [ ] **Experience**: company names (`[Tên công ty]`), dates, descriptions, impact metrics
-- [ ] **Projects**: real Demo/GitHub links for all 3 (Store Management System, Wedding Website, Đền Thờ Dương 1C)
-- [ ] **Education**: school name, certificates, years (`[Tên trường]`, `[Tên chứng chỉ]`, `[Năm]`)
-- [ ] **Contact**: real email (`mailto:hello@example.com` → real address)
-- [ ] **Meta**: `<title>` and `<meta name="description">` in `<head>` if you want different SEO copy
-- [ ] **Copy language**: current section content is written in Vietnamese — translate to English if the target audience needs it
-
-Quickly find remaining placeholders:
-
-```bash
-grep -n "\[Tên\|\[Năm\|example.com\|href=\"#\"" portfolio.html
-```
-
----
-
-## Roadmap (if you want to grow this into a full project)
-
-The current version is a static HTML file meant for reviewing the design. It can evolve into:
-
-- **Next.js + TypeScript + Tailwind**: split into components per section, use `next/font` for Space Grotesk/Inter/JetBrains Mono
-- **Dedicated routes**: `/` (portfolio) and `/cv` (print-friendly online CV)
-- **Framer Motion**: replace the current CSS scroll-reveal with smoother, orchestrated animation
-- **SEO**: `next-sitemap`, an Open Graph image, JSON-LD (`Person` schema)
-- **Lightweight CMS**: move experience/projects into a JSON or MDX file so content updates don't require touching code
-
----
+- **CMS integration**: move experience/projects into JSON or MDX files
+- **Print-friendly CV**: dedicated `/cv` route
+- **SEO**: `next-sitemap`, Open Graph image, JSON-LD (`Person` schema)
+- **Analytics**: integrate Vercel Analytics (already installed) or alternative
+- **Contact form**: serverless function with email service
 
 ## Compatibility
 
-- Mobile-first responsive, main breakpoints at `900px`, `800px`, `720px`, `560px`
+- Mobile-first responsive design
 - Respects `prefers-reduced-motion`
-- No external libraries beyond Google Fonts (Space Grotesk, Inter, JetBrains Mono)
+- Works on all modern browsers
+- TypeScript strict mode enabled
