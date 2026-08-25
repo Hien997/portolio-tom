@@ -19,7 +19,9 @@ export function Contact() {
           className="text-center max-w-2xl mx-auto"
         >
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="text-primary font-mono text-sm">liên hệ</span>
+            <span className="text-primary font-mono text-sm">
+              {t("hero.cta.contact")}
+            </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             {t("contact.title")}

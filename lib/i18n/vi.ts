@@ -15,6 +15,7 @@ export const vi = {
   "hero.subtitle": "Xây dựng UI quy mô lớn, mượt và có kiến trúc rõ ràng.",
   "hero.stack": "React / TypeScript / Performance / Scalable UI",
   "hero.cta.cv": "Xem CV",
+  
   "hero.cta.projects": "Xem dự án",
   "hero.cta.github": "GitHub",
   "hero.cta.linkedin": "LinkedIn",
