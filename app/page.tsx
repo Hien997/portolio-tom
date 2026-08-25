@@ -20,8 +20,8 @@ export default function Home() {
       <Projects />
       <Engineering />
       <Education />
-      <Contact />
       <CV />
+      <Contact />
     </main>
   );
 }

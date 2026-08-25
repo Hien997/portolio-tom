@@ -1,16 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "./language-provider";
 
 const educationItems = [
   {
-    name: "Cử nhân Công nghệ thông tin",
-    org: "Trường Đại Học Công Nghệ TP.HCM - HUTECH",
-    year: "2015 - 2019",
+    name: "education.degree",
+    org: "education.degree.org",
+    year: "education.degree.year",
   },
 ];
 
 export function Education() {
+  const { t } = useLanguage();
+
   return (
     <section id="education" className="section-padding max-w-7xl mx-auto">
       <motion.div
@@ -22,7 +25,7 @@ export function Education() {
         <div className="flex items-center gap-3 mb-2">
           <span className="text-primary font-mono text-sm">06.</span>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Education / Certificates
+            {t("education.title")}
           </h2>
           <div className="flex-1 h-px bg-border ml-4" />
         </div>
@@ -43,13 +46,13 @@ export function Education() {
             } hover:bg-card/50 transition-colors`}
           >
             <div>
-              <div className="font-semibold">{item.name}</div>
+              <div className="font-semibold">{t(item.name)}</div>
               <div className="text-muted-foreground text-sm mt-1">
-                {item.org}
+                {t(item.org)}
               </div>
             </div>
             <div className="font-mono text-sm text-muted-foreground whitespace-nowrap">
-              {item.year}
+              {t(item.year)}
             </div>
           </motion.div>
         ))}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Download, ArrowLeft, FileWarning } from "lucide-react";
+import { useLanguage } from "./language-provider";
 
 const CV_PATH = "/NGUYEN_QUANG_HIEN.pdf";
 
@@ -11,6 +12,7 @@ export function CV() {
   const [status, setStatus] = useState<"checking" | "found" | "missing">(
     "checking",
   );
+  const { t } = useLanguage();
 
   useEffect(() => {
     let cancelled = false;
@@ -38,13 +40,13 @@ export function CV() {
       >
         <div>
           <p className="font-mono text-sm text-primary mb-3">
-            // curriculum vitae
+            // {t('cv.title').toLowerCase()}
           </p>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            CV
+            {t('cv.title')}
           </h1>
           <p className="text-muted-foreground mt-2">
-            Nguyen Quang Hien — Front-End Developer
+            {t('cv.subtitle')}
           </p>
         </div>
         <div className="flex gap-3">
@@ -53,13 +55,13 @@ export function CV() {
             download
             className="font-mono text-sm inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 bg-primary text-primary-foreground hover:opacity-90 transition"
           >
-            <Download className="h-4 w-4" /> Download PDF
+            <Download className="h-4 w-4" /> {t('cv.download')}
           </a>
           <Link
             href="/"
             className="font-mono text-sm inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 hover:border-primary hover:text-primary transition"
           >
-            <ArrowLeft className="h-4 w-4" /> Back to portfolio
+            <ArrowLeft className="h-4 w-4" /> {t('cv.back')}
           </Link>
         </div>
       </motion.div>
@@ -76,7 +78,7 @@ export function CV() {
           {status === "checking" && (
             <div className="flex items-center justify-center py-24">
               <p className="text-muted-foreground text-sm font-mono">
-                Loading preview…
+                {t('cv.loading')}
               </p>
             </div>
           )}
@@ -86,17 +88,15 @@ export function CV() {
               <FileWarning className="h-8 w-8 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium mb-1">
-                  Couldn&apos;t find the PDF at {CV_PATH}
+                  {t('cv.notFound.title')}
                 </p>
                 <p className="text-muted-foreground text-sm max-w-sm">
-                  Make sure the file sits in your project&apos;s{" "}
-                  <code className="font-mono">public/</code> folder with this
-                  exact name — filenames with spaces will 404.
+                  {t('cv.notFound.desc')}
                 </p>
               </div>
             </div>
           )}
-
+  
           {status === "found" && (
             <iframe
               src={`${CV_PATH}#toolbar=1&view=FitH`}
@@ -109,9 +109,9 @@ export function CV() {
 
         {status === "found" && (
           <p className="text-muted-foreground text-xs font-mono mt-3">
-            Preview not loading right on mobile?{" "}
+            {t('cv.mobileTip')}{" "}
             <a href={CV_PATH} download className="text-primary hover:underline">
-              Download it instead
+              {t('cv.mobileTip.link')}
             </a>
             .
           </p>

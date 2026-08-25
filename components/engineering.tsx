@@ -1,41 +1,43 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useLanguage } from './language-provider'
 
 const engineeringCards = [
   {
     metric: '1M+',
-    label: 'Large-scale UI',
-    desc: 'Render bảng dữ liệu hàng triệu dòng mà vẫn giữ thao tác cuộn và lọc mượt.',
+    labelKey: 'engineering.largeScaleUI',
+    descKey: 'engineering.largeScaleUIDesc',
   },
   {
     metric: '<16ms',
-    label: 'Virtualization',
-    desc: 'Chỉ render các phần tử trong viewport, dùng TanStack Virtual cho danh sách và bảng cực lớn.',
+    labelKey: 'engineering.virtualization',
+    descKey: 'engineering.virtualizationDesc',
   },
   {
     metric: '0 jank',
-    label: 'Web Worker',
-    desc: 'Đưa các phép tính nặng (lọc, sắp xếp, tổng hợp) ra khỏi main thread để UI không bị đứng.',
+    labelKey: 'engineering.webWorker',
+    descKey: 'engineering.webWorkerDesc',
   },
   {
     metric: 'N-tier',
-    label: 'Frontend Architecture',
-    desc: 'Tách rõ tầng dữ liệu, trạng thái và hiển thị; thiết kế hệ thống component dùng chung cho nhiều team.',
+    labelKey: 'engineering.architecture',
+    descKey: 'engineering.architectureDesc',
   },
   {
     metric: 'Cache-first',
-    label: 'API / Data fetching',
-    desc: 'Chuẩn hóa tier fetch với TanStack Query: cache, retry, phân trang cursor, và đồng bộ trạng thái server-client.',
+    labelKey: 'engineering.dataFetching',
+    descKey: 'engineering.dataFetchingDesc',
   },
   {
     metric: 'Core Web Vitals',
-    label: 'Performance optimization',
-    desc: 'Tối ưu LCP/CLS/INP, code-splitting, lazy loading, và giám sát hiệu năng thực tế trên production.',
+    labelKey: 'engineering.performance',
+    descKey: 'engineering.performanceDesc',
   },
 ]
 
 export function Engineering() {
+  const { t } = useLanguage()
   return (
     <section id="engineering" className="section-padding max-w-7xl mx-auto">
       <motion.div
@@ -46,11 +48,11 @@ export function Engineering() {
       >
         <div className="flex items-center gap-3 mb-2">
           <span className="text-primary font-mono text-sm">05.</span>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Engineering</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{t("engineering.title")}</h2>
           <div className="flex-1 h-px bg-border ml-4" />
         </div>
         <p className="text-muted-foreground mt-4 max-w-2xl">
-          Không chỉ viết UI đẹp — mà còn chịu tải, chịu quy mô, và dễ bảo trì theo thời gian.
+          {t("engineering.subtitle")}
         </p>
       </motion.div>
 
@@ -67,9 +69,9 @@ export function Engineering() {
             <div className="text-2xl font-bold text-primary mb-2 font-display">
               {card.metric}
             </div>
-            <div className="font-semibold mb-2">{card.label}</div>
+            <div className="font-semibold mb-2">{t(card.labelKey)}</div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {card.desc}
+              {t(card.descKey)}
             </p>
           </motion.div>
         ))}

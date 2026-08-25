@@ -4,22 +4,25 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageToggle } from "./language-toggle";
 import { Menu, X } from "lucide-react";
+import { useLanguage } from "./language-provider";
 
 const navItems = [
-  { name: "Trang chủ", href: "/" },
-  { name: "Về tôi", href: "#about" },
-  { name: "Kỹ năng", href: "#skills" },
-  { name: "Kinh nghiệm", href: "#experience" },
-  { name: "Dự án", href: "#projects" },
-  { name: "Kỹ thuật", href: "#engineering" },
-  { name: "CV", href: "#cv" },
+  { nameKey: "nav.home", href: "/" },
+  { nameKey: "nav.about", href: "#about" },
+  { nameKey: "nav.skills", href: "#skills" },
+  { nameKey: "nav.experience", href: "#experience" },
+  { nameKey: "nav.projects", href: "#projects" },
+  { nameKey: "nav.engineering", href: "#engineering" },
+  { nameKey: "nav.cv", href: "#cv" },
 ];
 
 export function Nav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,17 +70,17 @@ export function Nav() {
               href={item.href}
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md"
             >
-              {item.name}
+              {t(item.nameKey)}
             </Link>
           ))}
-          <div className="ml-2">
-            <ThemeToggle />
-          </div>
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-2">
+        <div className="md:flex md:items-center gap-2 hidden">
+          <LanguageToggle />
           <ThemeToggle />
+        </div>
+        <div className="md:hidden flex items-center gap-2">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
@@ -99,7 +102,7 @@ export function Nav() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="px-3 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
               >
-                {item.name}
+                {t(item.nameKey)}
               </Link>
             ))}
           </div>

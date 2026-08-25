@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { useLanguage } from "./language-provider";
 
 export function Hero() {
+  const { t } = useLanguage();
   return (
     <section className="section-padding max-w-7xl mx-auto pt-32 md:pt-40 pb-20">
       <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -20,7 +22,7 @@ export function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-primary font-mono text-sm md:text-base tracking-wider uppercase"
           >
-            Hello, my name is
+            {t("hero.greeting")}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -28,9 +30,7 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight"
           >
-            Nguyen Van Hien <span className="text-gradient">Senior</span>{" "}
-            <span className="text-gradient">Front-End</span>{" "}
-            <span className="text-gradient">Developer</span>
+            {t("hero.title")} <span className="text-gradient">{t("hero.role")}</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ export function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed"
           >
-            React / TypeScript / Performance / Scalable UI
+            {t("hero.subtitle")}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -50,14 +50,14 @@ export function Hero() {
               href="#projects"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25"
             >
-              View Projects
+              {t("hero.cta.projects")}
               <ArrowDown size={18} />
             </Link>
             <Link
               href="#cv"
               className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-colors"
             >
-              View CV
+              {t("hero.cta.cv")}
             </Link>
             <div className="flex items-center gap-3">
               <Link
@@ -70,7 +70,7 @@ export function Hero() {
                 <Github size={20} />
               </Link>
               <Link
-                href="https://linkedin.com/in/nguyenvanhien"
+                href="https://linkedin.com/in/nguyen-quang-hien-5410701b9"
                 target="_blank"
                 rel="noopener"
                 className="p-2 rounded-lg border border-border hover:bg-muted transition-colors"
@@ -79,7 +79,7 @@ export function Hero() {
                 <Linkedin size={20} />
               </Link>
               <Link
-                href="mailto:hello@nguyenhien.dev"
+                href="mailto:quanghiennguyen97@gmail.com"
                 className="p-2 rounded-lg border border-border hover:bg-muted transition-colors"
                 aria-label="Email"
               >
@@ -115,7 +115,7 @@ export function Hero() {
                 </div>
                 <div className="pl-4">
                   <span className="text-green-500">'name'</span>:{" "}
-                  <span className="text-amber-500">'Nguyen Van Hien'</span>,
+                  <span className="text-amber-500">'Nguyen Quang Hien'</span>,
                 </div>
                 <div className="pl-4">
                   <span className="text-green-500">'role'</span>:{" "}
