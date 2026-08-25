@@ -148,6 +148,7 @@ export const vi = {
   "contact.footer.copyright": "© 2026 Nguyễn Quang Hiền",
   "contact.footer.built": "built with React / Next.js",
   "contact.footer.backToTop": "Back to top",
+  "contact.cta.linkedin": "LinkedIn",
   "contact.cta.cv": "CV online",
 
   // Language switcher

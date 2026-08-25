@@ -46,7 +46,7 @@ export function Contact() {
               {t("contact.github")}
             </Link>
             <Link
-              href="https://linkedin.com/"
+              href="https://www.linkedin.com/in/nguyen-quang-hien-5410701b9/"
               target="_blank"
               rel="noopener"
               className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-colors"

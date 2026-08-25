@@ -148,6 +148,7 @@ export const en = {
   "contact.footer.copyright": "© 2026 Nguyen Quang Hien",
   "contact.footer.built": "built with React / Next.js",
   "contact.footer.backToTop": "Back to top",
+  "contact.cta.linkedin": "LinkedIn",
   "contact.cta.cv": "CV online",
 
   // Language switcher
